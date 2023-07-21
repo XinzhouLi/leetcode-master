@@ -8,34 +8,27 @@
 class Solution:
     def threeSum(self, nums: [int]) -> [[int]]:
         nums.sort()
-        result = []
+        if nums[0] > 0:
+            return []
+        result = set()
         p1 = 0
-        p2 = 1
         p3 = len(nums)-1
-        while True:
-            sum  = 0
-            for i in range(p1+1, p3):
-                p2 = i
-                print(p2)
+        for p1 in range(p3-1):
+            if p1 > 0 and nums[p1] == nums[p1-1]: 
+                continue
+            p2 = p1+1
+            p3 = len(nums)-1
+            while p2<p3:
                 sum = nums[p1] + nums[p2] + nums[p3]
-                if sum > 0:
-
+                if sum < 0:
+                    p2 += 1
+                elif sum > 0:
                     p3 -= 1
-                    break
-                elif sum  == 0:
-
-                    if [nums[p1], nums[p2],nums[p3]] not in result:
-                        result.append([nums[p1], nums[p2],nums[p3]])
-
-
-            if p1+1 == p2 and p2+1 == p3:
-                break
-            if sum <= 0 and p2+1 == p3:
-
-                p1 += 1
-            if sum > 0  and p2+1 == p3:
-                p3 -= 1
-
+                elif sum == 0 :
+                    result.add((nums[p1], nums[p2], nums[p3]))   
+                    p2 += 1
+                    p3 -= 1
+        result = list(result)
         return result
 # @lc code=end
 
